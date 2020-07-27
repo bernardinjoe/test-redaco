@@ -18,7 +18,7 @@ class testredacocontroller extends Controller {
                                     'status'=>'success', 
                                     'message'=>'dark_background'
                                     ]);
-        } elseif ($background == "") {
+        } elseif ($background == "" || $background == "light") {
             return response()->json([
                                     'code' => 200 ,
                                     'status'=>'success', 
