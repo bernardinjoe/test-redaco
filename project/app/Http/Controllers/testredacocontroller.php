@@ -142,20 +142,23 @@ class testredacocontroller extends Controller {
 
     public function update($id, Request $request)
     {
-        $this->validate($request,[
-            'image' => 'required|file|image|mimes:jpeg,png,jpg',
-            'love_count' => 'required'
-        ]);
-
         $file       = $request->file('image');
-		$filename   = $file->getClientOriginalName();
-        $folder     = 'images';
-		$file->move($folder,$filename);
-    
-        $test = redaco_test::find($id);
-        $test->image = $filename;
-        $test->love_count = $request->love_count;
-        $test->save();
+        
+        if ($file != null) {
+            $file       = $request->file('image');
+            $filename   = $file->getClientOriginalName();
+            $folder     = 'images';
+            $file->move($folder,$filename);
+
+            $test = redaco_test::find($id);
+            $test->image = $filename;
+            $test->love_count = $request->love_count;
+            $test->save();
+        } else {
+            $test = redaco_test::find($id);
+            $test->love_count = $request->love_count;
+            $test->save();
+        }
 
         return redirect('/CRUD/home');
     }
